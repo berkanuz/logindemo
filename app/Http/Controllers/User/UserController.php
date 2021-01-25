@@ -16,7 +16,7 @@ class UserController extends Controller
     	return response()->json($user,200);
     }
 
-public function updateUser(Request $request, $id)
+public function updateName(Request $request, $id)
     {
     	$new_name = $request ->get('new_name');
     	$user = User::where('id',$id) -> first();

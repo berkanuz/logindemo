@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user();	
 });*/
 Route::middleware('auth:sanctum')->get('/user', 'App\Http\Controllers\User\UserController@getUser');
-Route::middleware('auth:sanctum')->post('/user/{id}', 'App\Http\Controllers\User\UserController@updateUser');
-Route::middleware('auth:sanctum')->post('/user/{id}', 'App\Http\Controllers\User\UserController@updatePassword');
+Route::middleware('auth:sanctum')->post('/updateUserName/{id}', 'App\Http\Controllers\User\UserController@updateName');
+Route::middleware('auth:sanctum')->post('/updateUserPassword/{id}', 'App\Http\Controllers\User\UserController@updatePassword');
 
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::middleware('auth:sanctum')->post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
