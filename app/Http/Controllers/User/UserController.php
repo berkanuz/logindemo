@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp\Client;
 
 
 class UserController extends Controller
@@ -16,7 +17,7 @@ class UserController extends Controller
     	return response()->json($user,200);
     }
 
-public function updateName(Request $request, $id)
+	public function updateName(Request $request, $id)
     {
     	$new_name = $request ->get('new_name');
     	$user = User::where('id',$id) -> first();
@@ -25,7 +26,7 @@ public function updateName(Request $request, $id)
     	return response() -> json($user,200);
 
 	}
-public function updatePassword(Request $request , $id)
+	public function updatePassword(Request $request , $id)
 	{
 		$new_password = $request -> get('new_password');
 		$user = User::where('id',$id) -> first();
@@ -34,6 +35,12 @@ public function updatePassword(Request $request , $id)
 		return response() -> json($user,200);
 	}
 
+ 	public function guzzleRequest(Request $request)
+ 	{
+ 		$client = new Client;
+		$request = $client->request('GET', 'https://www.google.com/' , ['timeout' => 3.14]);
+		echo $request->getBody();
+ 	}
 
 
 }
