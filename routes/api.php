@@ -18,12 +18,17 @@ use Illuminate\Support\Facades\Route;
     return $request->user();	
 });*/
 
-Route::middleware('auth:sanctum')->get('/requestDemo', 'App\Http\Controllers\User\UserController@guzzleRequest');
 
-
-Route::middleware('auth:sanctum')->get('/user', 'App\Http\Controllers\User\UserController@getUser');
-Route::middleware('auth:sanctum')->post('/updateUserName/{id}', 'App\Http\Controllers\User\UserController@updateName');
-Route::middleware('auth:sanctum')->post('/updateUserPassword/{id}', 'App\Http\Controllers\User\UserController@updatePassword');
 
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
 Route::middleware('auth:sanctum')->post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
+
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+	Route::get('/user', 'App\Http\Controllers\User\UserController@getUser');
+	Route::post('/user/update-name/{id}', 'App\Http\Controllers\User\UserController@updateName');
+	Route::post('/user/update-password/{id}', 'App\Http\Controllers\User\UserController@updatePassword');
+
+	//Route::get('/denemeGetUser', 'App\Http\Controllers\User\UserController@deneme');
+});
+Route::middleware('auth:sanctum')->get('/requestDemo', 'App\Http\Controllers\User\UserController@guzzleRequest');
